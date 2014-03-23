@@ -15,5 +15,5 @@ class App
   load: (params, loader) ->
     true
 
-# for nodeunit
-module.exports = App if module and module.exports
+# for qUnit
+global.App = App if global?

@@ -27,8 +27,10 @@
 
   })();
 
-  if (module && module.exports) {
-    module.exports = App;
+  if (typeof global !== "undefined" && global !== null) {
+    global.App = App;
   }
 
 }).call(this);
+
+//# sourceMappingURL=app.map

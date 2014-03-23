@@ -1,2 +1,4 @@
 # Ignore idea config.
 /.idea
+npm-debug.log
+node_modules/

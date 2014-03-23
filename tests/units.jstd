@@ -1,0 +1,6 @@
+load:
+  - ../src/*.js
+  - equiv.js
+  - QUnitAdapter.js
+test:
+  - units/*.js
