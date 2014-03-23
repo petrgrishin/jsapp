@@ -3,7 +3,7 @@
     "license" : "MIT",
     "version": "0.0.1",
     "scripts": {
-        "test": "./node_modules/.bin/nodeunit test"
+        "test": "./node_modules/.bin/nodeunit tests"
     },
     "dependencies": {
         "coffee-script": ">=1.4.0",
