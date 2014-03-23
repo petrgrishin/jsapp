@@ -2,14 +2,18 @@
     "name": "jsapp",
     "license" : "MIT",
     "version": "0.0.1",
+    "contributors": [
+        "Petr Grishin <petr.grishin@grishini.ru>",
+        "Smotrov Dmitriy <dsxack@gmail.com>"
+    ],
     "scripts": {
-        "test": "./node_modules/.bin/nodeunit tests"
+        "test": "./node_modules/.bin/nodeunit tests/nodeunit"
     },
     "dependencies": {
-        "coffee-script": ">=1.4.0",
-        "nodeunit": ">=0.7.4"
     },
-    "contributors": [
-        "Petr Grishin <petr.grishin@grishini.ru>"
-    ]
+    "devDependencies": {
+        "coffee-script": "~1.4.0",
+        "qunit": "~0.5.7",
+        "nodeunit": "~0.7.4"
+    }
 }

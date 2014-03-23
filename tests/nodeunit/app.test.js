@@ -9,7 +9,7 @@
       var appInstance, result;
       appInstance = new App();
       result = appInstance.f("testName", function() {});
-      test.equal(true, true);
+      test.equal(result, true);
       return test.done();
     }
   };
