@@ -5,15 +5,12 @@
   App = require("../../src/app");
 
   module.exports.AppTest = {
-    setUp: function(callback) {
-      this.appInstance = new App;
-      return callback();
-    },
     "test simple": function(test) {
-      var result;
-      result = this.appInstance.f("testName", function() {});
-      test.equal(result, true);
-      return test.done;
+      var appInstance, result;
+      appInstance = new App();
+      result = appInstance.f("testName", function() {});
+      test.equal(true, true);
+      return test.done();
     }
   };
 
