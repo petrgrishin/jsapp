@@ -1,8 +1,5 @@
 class App
-  constructor: (window, jQuery, underscore) ->
-    @window = window
-    @$ = jQuery
-    @_ = underscore
+  constructor: (@window, @$, @_) ->
     @viewFunctions = {}
 
   f: (name, func) ->

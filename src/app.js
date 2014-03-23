@@ -3,10 +3,10 @@
   var App;
 
   App = (function() {
-    function App(window, jQuery, underscore) {
+    function App(window, $, _) {
       this.window = window;
-      this.$ = jQuery;
-      this._ = underscore;
+      this.$ = $;
+      this._ = _;
       this.viewFunctions = {};
     }
 
