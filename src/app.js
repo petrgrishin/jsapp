@@ -23,19 +23,6 @@
 
   })();
 
-  Response = (function() {
-    function Response(params) {
-      this.params = params;
-    }
-
-    Response.prototype.bindApply = function(callback) {};
-
-    Response.prototype.apply = function() {};
-
-    return Response;
-
-  })();
-
   Scope = (function() {
     function Scope() {}
 
@@ -43,7 +30,29 @@
       return new Listener();
     };
 
+    Scope.prototype.createResponse = function() {
+      return new Response();
+    };
+
     return Scope;
+
+  })();
+
+  Response = (function() {
+    function Response(params) {
+      this.params = params;
+      this.listener = new Listener();
+    }
+
+    Response.prototype.bindApply = function(callback) {
+      return this.listener.subscribe("apply", callback);
+    };
+
+    Response.prototype.apply = function(params) {
+      return this.listener.trigger("apply", params);
+    };
+
+    return Response;
 
   })();
 
@@ -55,8 +64,8 @@
     subscribers = {};
 
     Listener.prototype.trigger = function(name, params) {
-      return subscribers[name].reduce(function(f) {
-        return f(params);
+      return subscribers[name].forEach(function(callback) {
+        return callback(params);
       });
     };
 

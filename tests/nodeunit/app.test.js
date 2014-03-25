@@ -9,11 +9,25 @@
       var appInstance, isTestPassed, listener;
       appInstance = new App();
       listener = appInstance.scope.createListener();
-      isTestPassed = true;
+      isTestPassed = false;
       listener.subscribe("test", function(param) {
         return isTestPassed = param;
       });
+      test.ok(!isTestPassed);
       listener.trigger("test", true);
+      test.ok(isTestPassed);
+      return test.done();
+    },
+    "test response object": function(test) {
+      var appInstance, isTestPassed, responseInstance;
+      appInstance = new App();
+      responseInstance = appInstance.scope.createResponse();
+      isTestPassed = false;
+      responseInstance.bindApply(function(param) {
+        return isTestPassed = param;
+      });
+      test.ok(!isTestPassed);
+      responseInstance.apply(true);
       test.ok(isTestPassed);
       return test.done();
     }

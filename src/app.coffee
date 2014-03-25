@@ -9,25 +9,30 @@ class App
   apply: () ->
     # todo: выполняем программу
 
-class Response
-  constructor: (@params) ->
-
-  bindApply: (callback) ->
-
-  apply: ->
-
-
 # Singleton class
 class Scope
   createListener: ->
     new Listener()
 
+  createResponse: ->
+    new Response()
+
+class Response
+  constructor: (@params) ->
+    @listener = new Listener()
+
+  bindApply: (callback) ->
+    @listener.subscribe "apply", callback
+
+  apply: (params) ->
+    @listener.trigger "apply", params
+
 class Listener
   subscribers = {}
 
   trigger: (name, params) ->
-    subscribers[name].reduce (f) ->
-      f(params)
+    subscribers[name].forEach (callback) ->
+      callback(params)
 
   subscribe: (name, callback) ->
     subscribers[name] ?= []
