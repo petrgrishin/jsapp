@@ -8,6 +8,9 @@
       this.$ = $;
       this._ = _;
       this.viewFunctions = {};
+      if (this.scope == null) {
+        this.scope = new Scope();
+      }
     }
 
     App.prototype.f = function(name, func) {
@@ -36,12 +39,34 @@
   Scope = (function() {
     function Scope() {}
 
+    Scope.prototype.createListener = function() {
+      return new Listener();
+    };
+
     return Scope;
 
   })();
 
   Listener = (function() {
+    var subscribers;
+
     function Listener() {}
+
+    subscribers = {};
+
+    Listener.prototype.trigger = function(name, params) {
+      return subscribers[name].reduce(function(f) {
+        return f(params);
+      });
+    };
+
+    Listener.prototype.subscribe = function(name, callback) {
+      if (subscribers[name] == null) {
+        subscribers[name] = [];
+      }
+      subscribers[name].push(callback);
+      return this;
+    };
 
     return Listener;
 
