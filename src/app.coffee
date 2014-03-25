@@ -4,13 +4,25 @@ class App
 
   f: (name, func) ->
     @viewFunctions[name] = func
-    @pullTurnScripts()
 
-  pullTurnScripts: ->
-    true
+  apply: () ->
+    # todo: выполняем программу
 
-  load: (params, loader) ->
-    true
+class Response
+  constructor: (@params) ->
+
+  bindApply: (callback) ->
+
+  apply: ->
+
+
+class Scope
+
+class Listener
+
+class Load
+
+class Queue
 
 # for nodeunit
 module.exports = App if module and module.exports
