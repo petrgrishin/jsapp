@@ -1,8 +1,11 @@
 App = require "../../src/app"
 
 module.exports.AppTest =
-  "test simple": (test) ->
+  "test listener gear": (test) ->
     appInstance = new App()
-    result = appInstance.f "testName", ->
-    test.equal(result, true)
+    listener = appInstance.scope.createListener()
+    isTestPassed = true
+    listener.subscribe "test", (param) -> isTestPassed = param
+    listener.trigger "test", true
+    test.ok(isTestPassed)
     test.done()

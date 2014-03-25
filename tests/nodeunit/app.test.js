@@ -5,11 +5,16 @@
   App = require("../../src/app");
 
   module.exports.AppTest = {
-    "test simple": function(test) {
-      var appInstance, result;
+    "test listener gear": function(test) {
+      var appInstance, isTestPassed, listener;
       appInstance = new App();
-      result = appInstance.f("testName", function() {});
-      test.equal(result, true);
+      listener = appInstance.scope.createListener();
+      isTestPassed = true;
+      listener.subscribe("test", function(param) {
+        return isTestPassed = param;
+      });
+      listener.trigger("test", true);
+      test.ok(isTestPassed);
       return test.done();
     }
   };
