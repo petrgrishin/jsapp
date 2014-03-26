@@ -64,9 +64,11 @@
     subscribers = {};
 
     Listener.prototype.trigger = function(name, params) {
-      return subscribers[name].forEach(function(callback) {
-        return callback(params);
-      });
+      if (subscribers[name]) {
+        return subscribers[name].forEach(function(callback) {
+          return callback(params);
+        });
+      }
     };
 
     Listener.prototype.subscribe = function(name, callback) {

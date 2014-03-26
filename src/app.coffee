@@ -31,7 +31,7 @@ class Listener
   subscribers = {}
 
   trigger: (name, params) ->
-    subscribers[name].forEach (callback) ->
+    if subscribers[name] then subscribers[name].forEach (callback) ->
       callback(params)
 
   subscribe: (name, callback) ->
