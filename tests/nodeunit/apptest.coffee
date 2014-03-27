@@ -1,4 +1,4 @@
-App = require "../../src/app"
+App = require "../../../build/app"
 Underscore = require "underscore"
 
 module.exports.AppTest =

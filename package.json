@@ -7,7 +7,7 @@
         "Smotrov Dmitriy <dsxack@gmail.com>"
     ],
     "scripts": {
-        "test": "./node_modules/.bin/nodeunit tests/nodeunit"
+        "test": "grunt -v && ./node_modules/.bin/nodeunit tests/nodeunit/build"
     },
     "dependencies": {
     },
@@ -15,6 +15,9 @@
         "coffee-script": "~1.4.0",
         "nodeunit": "~0.7.4",
         "underscore": "~1.6.0",
-        "jquery": "~2.1.0"
+        "jquery": "~2.1.0",
+        "grunt": "~0.4.2",
+        "grunt-contrib-coffee": "*",
+        "grunt-contrib-concat": "*"
     }
 }
