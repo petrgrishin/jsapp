@@ -1,0 +1,14 @@
+{
+    "name": "jsapp",
+    "license" : "MIT",
+    "version": "0.0.1",
+    "contributors": [
+        "Petr Grishin <petr.grishin@grishini.ru>",
+        "Smotrov Dmitriy <dsxack@gmail.com>"
+    ],
+    "dependencies": {
+        "bootstrap": "~3.1.1",
+        "underscore": "~1.6.0",
+        "jquery": "~2.1.0"
+    }
+}

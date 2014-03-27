@@ -1,2 +1,8 @@
 # Ignore idea config.
 /.idea
+
+# Ignore node modules
+/node_modules
+
+# Ignore bower components
+/bower_components
