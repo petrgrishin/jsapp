@@ -7,7 +7,8 @@ class App
     @viewFunctions[name] = func
 
   apply: () ->
-    # todo: выполняем программу
+    @_.each @viewFunctions, (callback, name) ->
+      callback({}, @scope, {});
 
 # Singleton class
 class Scope
@@ -33,6 +34,7 @@ class Listener
   trigger: (name, params) ->
     if subscribers[name] then subscribers[name].forEach (callback) ->
       callback(params)
+    this
 
   subscribe: (name, callback) ->
     subscribers[name] ?= []

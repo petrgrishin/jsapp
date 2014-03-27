@@ -13,7 +13,8 @@
     },
     "devDependencies": {
         "coffee-script": "~1.4.0",
-        "qunit": "~0.5.7",
-        "nodeunit": "~0.7.4"
+        "nodeunit": "~0.7.4",
+        "underscore": "~1.6.0",
+        "jquery": "~2.1.0"
     }
 }

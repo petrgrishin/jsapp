@@ -17,7 +17,11 @@
       return this.viewFunctions[name] = func;
     };
 
-    App.prototype.apply = function() {};
+    App.prototype.apply = function() {
+      return this._.each(this.viewFunctions, function(callback, name) {
+        return callback({}, this.scope, {});
+      });
+    };
 
     return App;
 
@@ -65,10 +69,11 @@
 
     Listener.prototype.trigger = function(name, params) {
       if (subscribers[name]) {
-        return subscribers[name].forEach(function(callback) {
+        subscribers[name].forEach(function(callback) {
           return callback(params);
         });
       }
+      return this;
     };
 
     Listener.prototype.subscribe = function(name, callback) {

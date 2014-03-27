@@ -1,4 +1,5 @@
 App = require "../../src/app"
+Underscore = require "underscore"
 
 module.exports.AppTest =
   "test listener gear": (test) ->
@@ -19,4 +20,13 @@ module.exports.AppTest =
     test.ok not isTestPassed
     responseInstance.apply true
     test.ok isTestPassed
+    test.done()
+
+  "test dependence scripts": (test) ->
+    appInstance = new App({}, {}, Underscore)
+    queueCall = []
+    appInstance.f "first.script", -> queueCall.push "first.script"
+    appInstance.f "second.script", -> queueCall.push "second.script"
+    appInstance.apply()
+    test.deepEqual queueCall, ["first.script", "second.script"]
     test.done()
