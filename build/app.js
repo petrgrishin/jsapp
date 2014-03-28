@@ -27,15 +27,13 @@
   })();
 
   Listener = (function() {
-    var subscribers;
-
-    function Listener() {}
-
-    subscribers = {};
+    function Listener() {
+      this.subscribers = {};
+    }
 
     Listener.prototype.trigger = function(name, params) {
-      if (subscribers[name]) {
-        subscribers[name].forEach(function(callback) {
+      if (this.subscribers[name]) {
+        this.subscribers[name].forEach(function(callback) {
           return callback(params);
         });
       }
@@ -43,10 +41,11 @@
     };
 
     Listener.prototype.subscribe = function(name, callback) {
-      if (subscribers[name] == null) {
-        subscribers[name] = [];
+      var _base;
+      if ((_base = this.subscribers)[name] == null) {
+        _base[name] = [];
       }
-      subscribers[name].push(callback);
+      this.subscribers[name].push(callback);
       return this;
     };
 

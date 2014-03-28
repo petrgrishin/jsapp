@@ -12,16 +12,17 @@ class App
 
 
 class Listener
-  subscribers = {}
+  constructor: ->
+    @subscribers = {}
 
   trigger: (name, params) ->
-    if subscribers[name] then subscribers[name].forEach (callback) ->
+    if @subscribers[name] then @subscribers[name].forEach (callback) ->
       callback(params)
     this
 
   subscribe: (name, callback) ->
-    subscribers[name] ?= []
-    subscribers[name].push callback
+    @subscribers[name] ?= []
+    @subscribers[name].push callback
     this
 
 class Load
