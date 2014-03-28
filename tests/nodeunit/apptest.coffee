@@ -4,12 +4,18 @@ Underscore = require "underscore"
 module.exports.AppTest =
   "test listener gear": (test) ->
     appInstance = new App()
-    listener = appInstance.scope.createListener()
+    result = 0
+    firstListener = appInstance.scope.createListener()
+    secondListener = appInstance.scope.createListener()
     isTestPassed = false
-    listener.subscribe "test", (param) -> isTestPassed = param
+    firstListener.subscribe "test", (param) ->
+      isTestPassed = param
+      result += 1
     test.ok not isTestPassed
-    listener.trigger "test", true
+    firstListener.trigger "test", true
+    secondListener.trigger "test", true
     test.ok isTestPassed
+    test.equals 1, result
     test.done()
 
   "test response object": (test) ->
