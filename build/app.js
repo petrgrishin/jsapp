@@ -1,15 +1,21 @@
 (function() {
-  var App, Listener, Load, Queue, Response, Scope;
+  var $, App, Listener, Load, Queue, Response, Scope, window, _;
+
+  window = null;
+
+  $ = null;
+
+  _ = null;
 
   App = (function() {
-    function App(window, $, _) {
-      this.window = window;
-      this.$ = $;
-      this._ = _;
+    function App(global, jquery, underscore) {
       this.viewFunctions = {};
       if (this.scope == null) {
         this.scope = new Scope();
       }
+      window = global;
+      $ = jquery;
+      _ = underscore;
     }
 
     App.prototype.f = function(name, func) {
@@ -17,7 +23,7 @@
     };
 
     App.prototype.apply = function() {
-      return this._.each(this.viewFunctions, function(callback, name) {
+      return _.each(this.viewFunctions, function(callback, name) {
         return callback({}, this.scope, {});
       });
     };
@@ -33,7 +39,7 @@
 
     Listener.prototype.trigger = function(name, params) {
       if (this.subscribers[name]) {
-        this.subscribers[name].forEach(function(callback) {
+        _.each(this.subscribers[name], function(callback) {
           return callback(params);
         });
       }

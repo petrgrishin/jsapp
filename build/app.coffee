@@ -1,22 +1,29 @@
+window = null
+$ = null
+_ = null
+
 class App
-  constructor: (@window, @$, @_) ->
+  constructor: (global, jquery, underscore) ->
     @viewFunctions = {}
     @scope ?= new Scope()
+    window = global
+    $ = jquery
+    _ = underscore
 
   f: (name, func) ->
     @viewFunctions[name] = func
 
   apply: () ->
-    @_.each @viewFunctions, (callback, name) ->
+    _.each @viewFunctions, (callback, name) ->
       callback {}, @scope, {}
 
 
 class Listener
-  constructor: ->
+  constructor: () ->
     @subscribers = {}
 
   trigger: (name, params) ->
-    if @subscribers[name] then @subscribers[name].forEach (callback) ->
+    if @subscribers[name] then _.each @subscribers[name], (callback) ->
       callback(params)
     this
 

@@ -3,7 +3,7 @@ Underscore = require "underscore"
 
 module.exports.AppTest =
   "test listener gear": (test) ->
-    appInstance = new App()
+    appInstance = new App({}, {}, Underscore)
     listener = appInstance.scope.createListener()
     isTestPassed = false
     listener.subscribe "test", (param) -> isTestPassed = param
@@ -13,7 +13,7 @@ module.exports.AppTest =
     test.done()
 
   "test response object": (test) ->
-    appInstance = new App()
+    appInstance = new App({}, {}, Underscore)
     responseInstance = appInstance.scope.createResponse()
     isTestPassed = false
     responseInstance.bindApply (param) -> isTestPassed = param
