@@ -1,5 +1,7 @@
 (function() {
-  var $, App, Listener, Load, Queue, Response, Scope, window, _;
+  var $, App, Area, Listener, Load, Queue, Response, Scope, Widget, window, _,
+    __hasProp = {}.hasOwnProperty,
+    __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
   window = null;
 
@@ -31,6 +33,10 @@
     return App;
 
   })();
+
+  if (module && module.exports) {
+    module.exports = App;
+  }
 
   Listener = (function() {
     function Listener() {
@@ -106,8 +112,37 @@
 
   })();
 
-  if (module && module.exports) {
-    module.exports = App;
-  }
+  Widget = (function() {
+    function Widget() {}
+
+    Widget.prototype.apply = function() {
+      if (this.response) {
+        return this.response.apply();
+      }
+    };
+
+    Widget.prototype.onApply = function(response) {
+      if (!response instanceof Response) {
+        throw "Not instance of Response";
+      }
+      return this.response = response;
+    };
+
+    return Widget;
+
+  })();
+
+  Area = (function(_super) {
+    __extends(Area, _super);
+
+    function Area() {}
+
+    Area.prototype.load = function() {};
+
+    Area.prototype.reload = function() {};
+
+    return Area;
+
+  })(Widget);
 
 }).call(this);

@@ -16,3 +16,6 @@ class App
   apply: () ->
     _.each @viewFunctions, (callback, name) ->
       callback {}, @scope, {}
+
+# for nodeunit
+module.exports = App if module and module.exports

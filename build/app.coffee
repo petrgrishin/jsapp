@@ -17,6 +17,8 @@ class App
     _.each @viewFunctions, (callback, name) ->
       callback {}, @scope, {}
 
+# for nodeunit
+module.exports = App if module and module.exports
 
 class Listener
   constructor: () ->
@@ -57,5 +59,17 @@ class Scope
   createResponse: ->
     new Response()
 
-# for nodeunit
-module.exports = App if module and module.exports
+class Widget
+  apply: () ->
+    @response.apply() if @response
+
+  onApply: (response) ->
+    throw "Not instance of Response" if not response instanceof Response
+    @response = response
+
+class Area extends Widget
+  constructor: () ->
+
+  load: () ->
+
+  reload: () ->
