@@ -5,3 +5,6 @@ class Scope
 
   createResponse: ->
     new Response()
+
+  createAreaWidget: (params) ->
+    new Area(params)

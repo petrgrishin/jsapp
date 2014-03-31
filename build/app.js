@@ -66,7 +66,17 @@
   })();
 
   Load = (function() {
-    function Load() {}
+    function Load(response) {
+      this.response = response;
+    }
+
+    Load.prototype.push = function(url) {
+      this.url = url;
+      this.params = {};
+      if (this.response) {
+        return this.response.apply(this.params);
+      }
+    };
 
     return Load;
 
@@ -108,6 +118,10 @@
       return new Response();
     };
 
+    Scope.prototype.createAreaWidget = function(params) {
+      return new Area(params);
+    };
+
     return Scope;
 
   })();
@@ -135,9 +149,15 @@
   Area = (function(_super) {
     __extends(Area, _super);
 
-    function Area() {}
+    function Area(params) {
+      this.params = params;
+    }
 
-    Area.prototype.load = function() {};
+    Area.prototype.load = function() {
+      var load;
+      load = new Load(this.response);
+      return load.push("/");
+    };
 
     Area.prototype.reload = function() {};
 

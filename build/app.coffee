@@ -35,7 +35,11 @@ class Listener
     this
 
 class Load
+  constructor: (@response) ->
 
+  push: (@url) ->
+    @params = {}
+    @response.apply @params if @response
 
 class Queue
 
@@ -59,6 +63,9 @@ class Scope
   createResponse: ->
     new Response()
 
+  createAreaWidget: (params) ->
+    new Area(params)
+
 class Widget
   apply: () ->
     @response.apply() if @response
@@ -68,8 +75,10 @@ class Widget
     @response = response
 
 class Area extends Widget
-  constructor: () ->
+  constructor: (@params) ->
 
   load: () ->
+    load = new Load(@response)
+    load.push "/"
 
   reload: () ->
