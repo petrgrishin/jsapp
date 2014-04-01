@@ -1,12 +1,14 @@
-window = null
+global = null
 $ = null
 _ = null
 
 class App
-  constructor: (global, jquery, underscore) ->
+  constructor: (context, jquery, underscore) ->
     @viewFunctions = {}
     @scope ?= new Scope()
-    window = global
+
+    # Todo
+    global = context
     $ = jquery
     _ = underscore
 
@@ -17,8 +19,6 @@ class App
     _.each @viewFunctions, (callback, name) ->
       callback {}, @scope, {}
 
-# for nodeunit
-module.exports = App if module and module.exports
 
 class Listener
   constructor: () ->
@@ -82,3 +82,10 @@ class Area extends Widget
     load.push "/"
 
   reload: () ->
+
+
+# for nodeunit
+module.exports = App if module?
+
+# for production
+window.App = new App(window, jQuery, _) if window?

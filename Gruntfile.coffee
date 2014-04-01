@@ -4,7 +4,7 @@ module.exports = (grunt) ->
       options:
         separator: "\n\n"
       dist:
-        src: ["src/*.coffee", "src/widget/*.coffee"]
+        src: ["src/*.coffee", "src/widget/*.coffee", "src/dev/*.coffee"]
         dest: "build/app.coffee"
     coffee:
       app:

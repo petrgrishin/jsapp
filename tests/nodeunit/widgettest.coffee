@@ -4,7 +4,7 @@ Underscore = require "underscore"
 module.exports.WidgetTest =
   "test listener gear": (test) ->
     isTestPassed = false
-    appInstance = new App({}, {}, Underscore)
+    appInstance = new App(null, null, Underscore)
     responseInstance = appInstance.scope.createResponse()
     responseInstance.bindApply () -> isTestPassed = true
     area = appInstance.scope.createAreaWidget()

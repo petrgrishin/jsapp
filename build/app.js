@@ -1,21 +1,21 @@
 (function() {
-  var $, App, Area, Listener, Load, Queue, Response, Scope, Widget, window, _,
+  var $, App, Area, Listener, Load, Queue, Response, Scope, Widget, global, _,
     __hasProp = {}.hasOwnProperty,
     __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
-  window = null;
+  global = null;
 
   $ = null;
 
   _ = null;
 
   App = (function() {
-    function App(global, jquery, underscore) {
+    function App(context, jquery, underscore) {
       this.viewFunctions = {};
       if (this.scope == null) {
         this.scope = new Scope();
       }
-      window = global;
+      global = context;
       $ = jquery;
       _ = underscore;
     }
@@ -33,10 +33,6 @@
     return App;
 
   })();
-
-  if (module && module.exports) {
-    module.exports = App;
-  }
 
   Listener = (function() {
     function Listener() {
@@ -164,5 +160,13 @@
     return Area;
 
   })(Widget);
+
+  if (typeof module !== "undefined" && module !== null) {
+    module.exports = App;
+  }
+
+  if (typeof window !== "undefined" && window !== null) {
+    window.App = new App(window, jQuery, _);
+  }
 
 }).call(this);
