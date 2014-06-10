@@ -19,7 +19,6 @@ class App
     _.each @viewFunctions, (callback, name) ->
       callback {}, @scope, {}
 
-
 class Listener
   constructor: () ->
     @subscribers = {}
@@ -33,16 +32,13 @@ class Listener
     @subscribers[name] ?= []
     @subscribers[name].push callback
     this
-
 class Load
   constructor: (@response) ->
 
   push: (@url) ->
     @params = {}
     @response.apply @params if @response
-
 class Queue
-
 
 class Response
   constructor: (@params) ->
@@ -54,7 +50,6 @@ class Response
   apply: (params) ->
     @listener.trigger "apply", params
 
-
 # Singleton class
 class Scope
   createListener: ->
@@ -65,7 +60,6 @@ class Scope
 
   createAreaWidget: (params) ->
     new Area(params)
-
 class Widget
   apply: () ->
     @response.apply() if @response
@@ -73,7 +67,6 @@ class Widget
   onApply: (response) ->
     throw "Not instance of Response" if not response instanceof Response
     @response = response
-
 class Area extends Widget
   constructor: (@params) ->
 
@@ -83,9 +76,7 @@ class Area extends Widget
 
   reload: () ->
 
-
 # for nodeunit
 module.exports = App if module?
-
 # for production
 window.App = new App(window, jQuery, _) if window?

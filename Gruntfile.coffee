@@ -1,18 +1,19 @@
 module.exports = (grunt) ->
   grunt.initConfig
-    concat:
-      options:
-        separator: "\n\n"
-      dist:
-        src: ["src/*.coffee", "src/widget/*.coffee", "src/dev/*.coffee"]
-        dest: "build/app.coffee"
+
     coffee:
       app:
-        expand: true
-        cwd: "build"
-        src: ["**/*.coffee"]
-        dest: "build"
-        ext: ".js"
+        options:
+          join: true
+          joinExt: '.coffee'
+          sourceMap: true
+        files:
+          'build/app.js': [
+            'src/*.coffee'
+            'src/widget/*.coffee'
+            'src/dev/*.coffee'
+          ]
+
       test:
         expand: true
         cwd: "tests/nodeunit"
@@ -21,5 +22,4 @@ module.exports = (grunt) ->
         ext: ".js"
 
   grunt.loadNpmTasks "grunt-contrib-coffee"
-  grunt.loadNpmTasks "grunt-contrib-concat"
-  grunt.registerTask "default", ["concat", "coffee"]
+  grunt.registerTask "default", ["coffee"]
