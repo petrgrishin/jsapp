@@ -16,15 +16,16 @@
     };
 
     App.prototype.run = function(name, params, dependents) {
-      var callback, dependentsResult;
+      var callback, dependentProcessor, dependentsResult;
       params = params || {};
       dependents = dependents || [];
       dependentsResult = [];
-      _.each(dependents, function(_arg, dependentName) {
+      dependentProcessor = function(_arg, dependentName) {
         var dependents, name, params;
         name = _arg.name, params = _arg.params, dependents = _arg.dependents;
         return dependentsResult[dependentName] = this.run(name, params, dependents);
-      });
+      };
+      _.each(dependents, dependentProcessor, this);
       callback = this.viewFunctions[name];
       return callback(params, this.scope, dependentsResult);
     };

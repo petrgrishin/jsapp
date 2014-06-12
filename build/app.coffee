@@ -10,9 +10,9 @@ class App
     params = params || {}
     dependents = dependents || []
     dependentsResult = []
-    _.each dependents, ({name, params, dependents}, dependentName) ->
+    dependentProcessor = ({name, params, dependents}, dependentName) ->
       dependentsResult[dependentName] = this.run(name, params, dependents)
-
+    _.each dependents, dependentProcessor, this
     callback = @viewFunctions[name]
     return callback params, @scope, dependentsResult
 class Listener
