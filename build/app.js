@@ -1,33 +1,32 @@
 (function() {
-  var $, App, Area, Listener, Load, Queue, Response, Scope, Widget, global, _,
+  var App, Area, Listener, Load, Queue, Response, Scope, Widget,
     __hasProp = {}.hasOwnProperty,
     __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
-  global = null;
-
-  $ = null;
-
-  _ = null;
-
   App = (function() {
-    function App(context, jquery, underscore) {
+    function App() {
       this.viewFunctions = {};
       if (this.scope == null) {
         this.scope = new Scope();
       }
-      global = context;
-      $ = jquery;
-      _ = underscore;
     }
 
-    App.prototype.f = function(name, func) {
+    App.prototype.register = function(name, func) {
       return this.viewFunctions[name] = func;
     };
 
-    App.prototype.apply = function() {
-      return _.each(this.viewFunctions, function(callback, name) {
-        return callback({}, this.scope, {});
+    App.prototype.run = function(name, params, dependents) {
+      var callback, dependentsResult;
+      params = params || {};
+      dependents = dependents || [];
+      dependentsResult = [];
+      _.each(dependents, function(_arg, dependentName) {
+        var dependents, name, params;
+        name = _arg.name, params = _arg.params, dependents = _arg.dependents;
+        return dependentsResult[dependentName] = this.run(name, params, dependents);
       });
+      callback = this.viewFunctions[name];
+      return callback(params, this.scope, dependentsResult);
     };
 
     return App;
@@ -166,7 +165,7 @@
   }
 
   if (typeof window !== "undefined" && window !== null) {
-    window.App = new App(window, jQuery, _);
+    window.App = new App(window);
   }
 
 }).call(this);

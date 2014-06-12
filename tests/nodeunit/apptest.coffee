@@ -1,9 +1,9 @@
 App = require "../../../build/app"
-Underscore = require "underscore"
+global._ = require "underscore"
 
 module.exports.AppTest =
   "test listener gear": (test) ->
-    appInstance = new App({}, {}, Underscore)
+    appInstance = new App()
     result = 0
     firstListener = appInstance.scope.createListener()
     secondListener = appInstance.scope.createListener()
@@ -19,7 +19,7 @@ module.exports.AppTest =
     test.done()
 
   "test response object": (test) ->
-    appInstance = new App({}, {}, Underscore)
+    appInstance = new App()
     responseInstance = appInstance.scope.createResponse()
     isTestPassed = false
     responseInstance.bindApply (param) -> isTestPassed = param
@@ -29,10 +29,11 @@ module.exports.AppTest =
     test.done()
 
   "test dependence scripts": (test) ->
-    appInstance = new App({}, {}, Underscore)
+    appInstance = new App()
     queueCall = []
-    appInstance.f "first.script", -> queueCall.push "first.script"
-    appInstance.f "second.script", -> queueCall.push "second.script"
-    appInstance.apply()
+    appInstance.register "first.script", -> queueCall.push "first.script"
+    appInstance.register "second.script", -> queueCall.push "second.script"
+    appInstance.run "first.script"
+    appInstance.run "second.script"
     test.deepEqual queueCall, ["first.script", "second.script"]
     test.done()

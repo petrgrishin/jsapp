@@ -1,10 +1,10 @@
 App = require "../../../build/app"
-Underscore = require "underscore"
+global._ = require "underscore"
 
 module.exports.WidgetTest =
   "test listener gear": (test) ->
     isTestPassed = false
-    appInstance = new App(null, null, Underscore)
+    appInstance = new App()
     responseInstance = appInstance.scope.createResponse()
     responseInstance.bindApply () -> isTestPassed = true
     area = appInstance.scope.createAreaWidget()

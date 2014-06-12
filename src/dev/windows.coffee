@@ -1,2 +1,2 @@
 # for production
-window.App = new App(window, jQuery, _) if window?
+window.App = new App(window) if window?

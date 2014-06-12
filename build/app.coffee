@@ -1,24 +1,20 @@
-global = null
-$ = null
-_ = null
-
 class App
-  constructor: (context, jquery, underscore) ->
+  constructor: () ->
     @viewFunctions = {}
     @scope ?= new Scope()
 
-    # Todo
-    global = context
-    $ = jquery
-    _ = underscore
-
-  f: (name, func) ->
+  register: (name, func) ->
     @viewFunctions[name] = func
 
-  apply: () ->
-    _.each @viewFunctions, (callback, name) ->
-      callback {}, @scope, {}
+  run: (name, params, dependents) ->
+    params = params || {}
+    dependents = dependents || []
+    dependentsResult = []
+    _.each dependents, ({name, params, dependents}, dependentName) ->
+      dependentsResult[dependentName] = this.run(name, params, dependents)
 
+    callback = @viewFunctions[name]
+    return callback params, @scope, dependentsResult
 class Listener
   constructor: () ->
     @subscribers = {}
@@ -79,4 +75,4 @@ class Area extends Widget
 # for nodeunit
 module.exports = App if module?
 # for production
-window.App = new App(window, jQuery, _) if window?
+window.App = new App(window) if window?
