@@ -28,13 +28,23 @@ class Listener
     @subscribers[name] ?= []
     @subscribers[name].push callback
     this
-class Load
+class Loader
   constructor: (@response) ->
 
-  push: (@url) ->
-    @params = {}
-    @response.apply @params if @response
+  pull: (url, options) ->
+    $.ajax
+      url: url
+      data: options['data']
+      type: options['type'] || 'GET'
+      dataType: 'json'
+      success: (response) ->
+        console.log(response)
+
+    responseParams = {}
+    @response.apply responseParams if @response
 class Queue
+
+class Request
 
 class Response
   constructor: (@params) ->
@@ -56,6 +66,9 @@ class Scope
 
   createAreaWidget: (params) ->
     new Area(params)
+
+  createLoader: (response) ->
+    new Loader(response)
 class Widget
   apply: () ->
     @response.apply() if @response
@@ -67,8 +80,9 @@ class Area extends Widget
   constructor: (@params) ->
 
   load: () ->
-    load = new Load(@response)
-    load.push "/"
+    load = new Loader(@response)
+    load.pull "/", {data: ""}
+
 
   reload: () ->
 

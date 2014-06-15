@@ -1,5 +1,5 @@
 (function() {
-  var App, Area, Listener, Load, Queue, Response, Scope, Widget,
+  var App, Area, Listener, Loader, Queue, Request, Response, Scope, Widget,
     __hasProp = {}.hasOwnProperty,
     __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
@@ -61,20 +61,29 @@
 
   })();
 
-  Load = (function() {
-    function Load(response) {
+  Loader = (function() {
+    function Loader(response) {
       this.response = response;
     }
 
-    Load.prototype.push = function(url) {
-      this.url = url;
-      this.params = {};
+    Loader.prototype.pull = function(url, options) {
+      var responseParams;
+      $.ajax({
+        url: url,
+        data: options['data'],
+        type: options['type'] || 'GET',
+        dataType: 'json',
+        success: function(response) {
+          return console.log(response);
+        }
+      });
+      responseParams = {};
       if (this.response) {
-        return this.response.apply(this.params);
+        return this.response.apply(responseParams);
       }
     };
 
-    return Load;
+    return Loader;
 
   })();
 
@@ -82,6 +91,13 @@
     function Queue() {}
 
     return Queue;
+
+  })();
+
+  Request = (function() {
+    function Request() {}
+
+    return Request;
 
   })();
 
@@ -118,6 +134,10 @@
       return new Area(params);
     };
 
+    Scope.prototype.createLoader = function(response) {
+      return new Loader(response);
+    };
+
     return Scope;
 
   })();
@@ -151,8 +171,10 @@
 
     Area.prototype.load = function() {
       var load;
-      load = new Load(this.response);
-      return load.push("/");
+      load = new Loader(this.response);
+      return load.pull("/", {
+        data: ""
+      });
     };
 
     Area.prototype.reload = function() {};

@@ -8,3 +8,6 @@ class Scope
 
   createAreaWidget: (params) ->
     new Area(params)
+
+  createLoader: (response) ->
+    new Loader(response)

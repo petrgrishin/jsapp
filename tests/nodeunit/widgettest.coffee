@@ -1,5 +1,6 @@
 App = require "../../../build/app"
 global._ = require "underscore"
+global.$ = require "jquery"
 
 module.exports.WidgetTest =
   "test listener gear": (test) ->
