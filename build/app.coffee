@@ -38,8 +38,9 @@ class Loader
       type: options['type'] || 'GET'
       dataType: 'json'
       success: (response) ->
-        responseParams = response['responseParams'] || []
-        @response.apply responseParams if @response
+        if response
+          responseParams = response['responseParams'] || []
+          @response.apply responseParams if @response
 class Queue
 
 class Request

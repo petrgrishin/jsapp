@@ -74,9 +74,11 @@
         dataType: 'json',
         success: function(response) {
           var responseParams;
-          responseParams = response['responseParams'] || [];
-          if (this.response) {
-            return this.response.apply(responseParams);
+          if (response) {
+            responseParams = response['responseParams'] || [];
+            if (this.response) {
+              return this.response.apply(responseParams);
+            }
           }
         }
       });
