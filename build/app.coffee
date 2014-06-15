@@ -38,10 +38,8 @@ class Loader
       type: options['type'] || 'GET'
       dataType: 'json'
       success: (response) ->
-        console.log(response)
-
-    responseParams = {}
-    @response.apply responseParams if @response
+        responseParams = response['responseParams'] || []
+        @response.apply responseParams if @response
 class Queue
 
 class Request
@@ -64,8 +62,8 @@ class Scope
   createResponse: ->
     new Response()
 
-  createAreaWidget: (params) ->
-    new Area(params)
+  createAreaWidget: (response) ->
+    new Area(response)
 
   createLoader: (response) ->
     new Loader(response)
@@ -77,12 +75,11 @@ class Widget
     throw "Not instance of Response" if not response instanceof Response
     @response = response
 class Area extends Widget
-  constructor: (@params) ->
+  constructor: (@response) ->
 
   load: () ->
     load = new Loader(@response)
     load.pull "/", {data: ""}
-
 
   reload: () ->
 

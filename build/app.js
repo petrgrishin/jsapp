@@ -67,20 +67,19 @@
     }
 
     Loader.prototype.pull = function(url, options) {
-      var responseParams;
-      $.ajax({
+      return $.ajax({
         url: url,
         data: options['data'] || [],
         type: options['type'] || 'GET',
         dataType: 'json',
         success: function(response) {
-          return console.log(response);
+          var responseParams;
+          responseParams = response['responseParams'] || [];
+          if (this.response) {
+            return this.response.apply(responseParams);
+          }
         }
       });
-      responseParams = {};
-      if (this.response) {
-        return this.response.apply(responseParams);
-      }
     };
 
     return Loader;
@@ -130,8 +129,8 @@
       return new Response();
     };
 
-    Scope.prototype.createAreaWidget = function(params) {
-      return new Area(params);
+    Scope.prototype.createAreaWidget = function(response) {
+      return new Area(response);
     };
 
     Scope.prototype.createLoader = function(response) {
@@ -165,8 +164,8 @@
   Area = (function(_super) {
     __extends(Area, _super);
 
-    function Area(params) {
-      this.params = params;
+    function Area(response) {
+      this.response = response;
     }
 
     Area.prototype.load = function() {

@@ -6,8 +6,8 @@ class Scope
   createResponse: ->
     new Response()
 
-  createAreaWidget: (params) ->
-    new Area(params)
+  createAreaWidget: (response) ->
+    new Area(response)
 
   createLoader: (response) ->
     new Loader(response)

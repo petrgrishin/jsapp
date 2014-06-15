@@ -1,9 +1,8 @@
 class Area extends Widget
-  constructor: (@params) ->
+  constructor: (@response) ->
 
   load: () ->
     load = new Loader(@response)
     load.pull "/", {data: ""}
-
 
   reload: () ->

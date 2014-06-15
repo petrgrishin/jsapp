@@ -8,7 +8,5 @@ class Loader
       type: options['type'] || 'GET'
       dataType: 'json'
       success: (response) ->
-        console.log(response)
-
-    responseParams = {}
-    @response.apply responseParams if @response
+        responseParams = response['responseParams'] || []
+        @response.apply responseParams if @response
