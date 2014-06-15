@@ -4,7 +4,7 @@ class Loader
   pull: (url, options) ->
     $.ajax
       url: url
-      data: options['data']
+      data: options['data'] || []
       type: options['type'] || 'GET'
       dataType: 'json'
       success: (response) ->
