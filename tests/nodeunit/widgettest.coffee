@@ -14,5 +14,5 @@ module.exports.WidgetTest =
     area = appInstance.scope.createAreaWidget(responseInstance)
     test.ok not isTestPassed
     area.load()
-#    test.ok isTestPassed
+    test.ok isTestPassed
     test.done()

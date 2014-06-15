@@ -2,6 +2,7 @@ class Loader
   constructor: (@response) ->
 
   pull: (url, options = {}) ->
+    self = this
     $.ajax
       url: url
       data: options['data'] || {}
@@ -10,4 +11,4 @@ class Loader
       success: (response) ->
         if response
           responseParams = response['responseParams'] || {}
-          @response.apply responseParams if @response
+          self.response.apply responseParams if self.response

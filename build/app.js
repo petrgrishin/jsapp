@@ -67,9 +67,11 @@
     }
 
     Loader.prototype.pull = function(url, options) {
+      var self;
       if (options == null) {
         options = {};
       }
+      self = this;
       return $.ajax({
         url: url,
         data: options['data'] || {},
@@ -79,8 +81,8 @@
           var responseParams;
           if (response) {
             responseParams = response['responseParams'] || {};
-            if (this.response) {
-              return this.response.apply(responseParams);
+            if (self.response) {
+              return self.response.apply(responseParams);
             }
           }
         }
