@@ -5,7 +5,9 @@
 
   App = (function() {
     function App() {
+      this.assertPath = '/assets/scripts/';
       this.viewFunctions = {};
+      this.registerScripts = {};
       if (this.scope == null) {
         this.scope = new Scope();
       }
@@ -17,6 +19,7 @@
 
     App.prototype.run = function(name, params, dependents) {
       var callback, dependentProcessor, dependentsResult;
+      this.registerScriptFile(name);
       params = params || {};
       dependents = dependents || [];
       dependentsResult = [];
@@ -28,6 +31,20 @@
       _.each(dependents, dependentProcessor, this);
       callback = this.viewFunctions[name];
       return callback(params, this.scope, dependentsResult);
+    };
+
+    App.prototype.registerScriptFile = function(name) {
+      var $script;
+      if (this.registerScripts[name] != null) {
+        return;
+      }
+      this.registerScripts[name] = this.assertPath + name + '.js';
+      $script = $('<script>');
+      $script.attr('src', this.registerScripts[name]);
+      if (this.body == null) {
+        this.body = $('body:first');
+      }
+      return this.body.append($script);
     };
 
     return App;
