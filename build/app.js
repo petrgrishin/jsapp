@@ -95,9 +95,14 @@
         type: options['type'] || 'GET',
         dataType: 'json',
         success: function(response) {
-          var responseParams;
+          var dependents, params, responseParams;
           if (response) {
             responseParams = response['responseParams'] || {};
+            params = response['params'] || [];
+            dependents = response['dependents'] || [];
+            if (response['name']) {
+              window.App.run(response['name'], params, dependents);
+            }
             if (self.response) {
               return self.response.apply(responseParams);
             }

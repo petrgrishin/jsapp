@@ -53,6 +53,12 @@ class Loader
       success: (response) ->
         if response
           responseParams = response['responseParams'] || {}
+
+          params = response['params'] || []
+          dependents = response['dependents'] || []
+          # TODO: window.App
+          window.App.run response['name'], params, dependents if response['name']
+
           self.response.apply responseParams if self.response
 class Queue
 
