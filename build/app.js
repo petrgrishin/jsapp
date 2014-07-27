@@ -95,16 +95,21 @@
         type: options['type'] || 'GET',
         dataType: 'json',
         success: function(response) {
-          var dependents, params, responseParams;
+          var context, dependents, params;
           if (response) {
-            responseParams = response['responseParams'] || {};
             params = response['params'] || [];
             dependents = response['dependents'] || [];
             if (response['name']) {
-              window.App.run(response['name'], params, dependents);
+              context = window.App.run(response['name'], params, dependents);
+              self.response.setContext(context);
             }
-            if (self.response) {
-              return self.response.apply(responseParams);
+            if (response['content']) {
+              self.response.setContent(response['content']);
+            }
+            if (response['responseParams']) {
+              if (self.response) {
+                return self.response.apply(response['responseParams']);
+              }
             }
           }
         }
@@ -141,6 +146,22 @@
 
     Response.prototype.apply = function(params) {
       return this.listener.trigger("apply", params);
+    };
+
+    Response.prototype.setContent = function(content) {
+      this.content = content;
+    };
+
+    Response.prototype.getContent = function() {
+      return this.content;
+    };
+
+    Response.prototype.setContext = function(context) {
+      this.context = context;
+    };
+
+    Response.prototype.getContext = function() {
+      return this.context;
     };
 
     return Response;
