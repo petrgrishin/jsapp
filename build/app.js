@@ -111,7 +111,7 @@
                 self.response.apply(response['responseParams']);
               }
             }
-            return self.response.load;
+            return self.response.load();
           }
         }
       });
