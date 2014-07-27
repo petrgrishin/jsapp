@@ -23,3 +23,5 @@ class Loader
 
           if response['responseParams']
             self.response.apply response['responseParams'] if self.response
+
+          self.response.load

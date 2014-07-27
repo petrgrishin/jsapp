@@ -108,9 +108,10 @@
             }
             if (response['responseParams']) {
               if (self.response) {
-                return self.response.apply(response['responseParams']);
+                self.response.apply(response['responseParams']);
               }
             }
+            return self.response.load;
           }
         }
       });
@@ -139,6 +140,14 @@
       this.params = params;
       this.listener = new Listener();
     }
+
+    Response.prototype.bindLoad = function(callback) {
+      return this.listener.subscribe("load", callback);
+    };
+
+    Response.prototype.load = function() {
+      return this.listener.trigger("load");
+    };
 
     Response.prototype.bindApply = function(callback) {
       return this.listener.subscribe("apply", callback);

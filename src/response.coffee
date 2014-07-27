@@ -2,6 +2,12 @@ class Response
   constructor: (@params) ->
     @listener = new Listener()
 
+  bindLoad: (callback) ->
+    @listener.subscribe "load", callback
+
+  load: () ->
+    @listener.trigger "load"
+
   bindApply: (callback) ->
     @listener.subscribe "apply", callback
 
