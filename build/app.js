@@ -56,16 +56,13 @@
       this.subscribers = {};
     }
 
-    Listener.prototype.trigger = function(name, params, context) {
+    Listener.prototype.trigger = function(name, params) {
       if (params == null) {
         params = {};
       }
-      if (context == null) {
-        context = {};
-      }
       if (this.subscribers[name]) {
         _.each(this.subscribers[name], function(callback) {
-          return callback.call(context, params);
+          return callback(params);
         });
       }
       return this;
@@ -152,19 +149,19 @@
     };
 
     Response.prototype.bindLoad = function(callback) {
-      return this.listener.subscribe("load", callback);
+      return this.listener.subscribe("load", _.bind(callback, this));
     };
 
     Response.prototype.load = function() {
-      return this.listener.trigger("load", {}, this);
+      return this.listener.trigger("load");
     };
 
     Response.prototype.bindApply = function(callback) {
-      return this.listener.subscribe("apply", callback);
+      return this.listener.subscribe("apply", _.bind(callback, this));
     };
 
     Response.prototype.apply = function() {
-      return this.listener.trigger("apply", {}, this);
+      return this.listener.trigger("apply");
     };
 
     Response.prototype.setContent = function(content) {

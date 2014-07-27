@@ -31,9 +31,9 @@ class Listener
   constructor: () ->
     @subscribers = {}
 
-  trigger: (name, params = {}, context = {}) ->
+  trigger: (name, params = {}) ->
     if @subscribers[name] then _.each @subscribers[name], (callback) ->
-      callback.call(context, params)
+      callback(params)
     this
 
   subscribe: (name, callback) ->
@@ -79,16 +79,16 @@ class Response
     @params
 
   bindLoad: (callback) ->
-    @listener.subscribe "load", callback
+    @listener.subscribe "load", _.bind(callback, this)
 
   load: () ->
-    @listener.trigger "load", {}, this
+    @listener.trigger "load"
 
   bindApply: (callback) ->
-    @listener.subscribe "apply", callback
+    @listener.subscribe "apply", _.bind(callback, this)
 
   apply: () ->
-    @listener.trigger "apply", {}, this
+    @listener.trigger "apply"
 
   setContent: (@content) ->
 
