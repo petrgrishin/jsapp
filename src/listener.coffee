@@ -2,9 +2,9 @@ class Listener
   constructor: () ->
     @subscribers = {}
 
-  trigger: (name, params) ->
+  trigger: (name, params = {}, context = {}) ->
     if @subscribers[name] then _.each @subscribers[name], (callback) ->
-      callback(params)
+      callback.call(context, params)
     this
 
   subscribe: (name, callback) ->

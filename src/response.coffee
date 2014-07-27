@@ -2,24 +2,27 @@ class Response
   constructor: (@params) ->
     @listener = new Listener()
 
+  getParams: () ->
+    @params
+
   bindLoad: (callback) ->
     @listener.subscribe "load", callback
 
   load: () ->
-    @listener.trigger "load"
+    @listener.trigger "load", {}, this
 
   bindApply: (callback) ->
     @listener.subscribe "apply", callback
 
-  apply: (params) ->
-    @listener.trigger "apply", params
+  apply: () ->
+    @listener.trigger "apply", {}, this
 
   setContent: (@content) ->
 
   getContent: () ->
-    return @content
+    @content
 
   setContext: (@context) ->
 
   getContext: () ->
-    return @context
+    @context

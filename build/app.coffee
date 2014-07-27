@@ -31,9 +31,9 @@ class Listener
   constructor: () ->
     @subscribers = {}
 
-  trigger: (name, params) ->
+  trigger: (name, params = {}, context = {}) ->
     if @subscribers[name] then _.each @subscribers[name], (callback) ->
-      callback(params)
+      callback.call(context, params)
     this
 
   subscribe: (name, callback) ->
@@ -75,27 +75,30 @@ class Response
   constructor: (@params) ->
     @listener = new Listener()
 
+  getParams: () ->
+    @params
+
   bindLoad: (callback) ->
     @listener.subscribe "load", callback
 
   load: () ->
-    @listener.trigger "load"
+    @listener.trigger "load", {}, this
 
   bindApply: (callback) ->
     @listener.subscribe "apply", callback
 
-  apply: (params) ->
-    @listener.trigger "apply", params
+  apply: () ->
+    @listener.trigger "apply", {}, this
 
   setContent: (@content) ->
 
   getContent: () ->
-    return @content
+    @content
 
   setContext: (@context) ->
 
   getContext: () ->
-    return @context
+    @context
 
 # Singleton class
 class Scope
