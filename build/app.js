@@ -77,6 +77,11 @@
       return this;
     };
 
+    Listener.prototype.clear = function(name) {
+      this.subscribers[name] = [];
+      return this;
+    };
+
     return Listener;
 
   })();
@@ -100,12 +105,6 @@
         success: function(response) {
           var context, dependents, params;
           if (response) {
-            params = response['params'] || [];
-            dependents = response['dependents'] || [];
-            if (response['name']) {
-              context = window.App.run(response['name'], params, dependents);
-              self.response.setContext(context);
-            }
             if (response['content']) {
               self.response.setContent(response['content']);
             }
@@ -113,8 +112,16 @@
               if (self.response) {
                 self.response.apply(response['responseParams']);
               }
+            } else {
+              self.response.load();
             }
-            return self.response.load();
+            params = response['params'] || [];
+            dependents = response['dependents'] || [];
+            if (response['name']) {
+              context = window.App.run(response['name'], params, dependents);
+              self.response.setContext(context);
+              return self.response.triggerContext();
+            }
           }
         }
       });
@@ -164,6 +171,14 @@
       return this.listener.trigger("apply");
     };
 
+    Response.prototype.bindContext = function(callback) {
+      return this.listener.subscribe("context", _.bind(callback, this));
+    };
+
+    Response.prototype.triggerContext = function() {
+      return this.listener.trigger("context");
+    };
+
     Response.prototype.setContent = function(content) {
       this.content = content;
     };
@@ -178,6 +193,18 @@
 
     Response.prototype.getContext = function() {
       return this.context;
+    };
+
+    Response.prototype.clearApply = function() {
+      return this.listener.clear("apply");
+    };
+
+    Response.prototype.clearLoad = function() {
+      return this.listener.clear("load");
+    };
+
+    Response.prototype.clearContext = function() {
+      return this.listener.clear("context");
     };
 
     return Response;

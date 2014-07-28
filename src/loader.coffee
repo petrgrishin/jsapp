@@ -10,18 +10,19 @@ class Loader
       dataType: 'json'
       success: (response) ->
         if response
-          params = response['params'] || []
-          dependents = response['dependents'] || []
-
-          if response['name']
-            # TODO: run window.App
-            context = window.App.run response['name'], params, dependents
-            self.response.setContext context
 
           if response['content']
             self.response.setContent response['content']
 
           if response['responseParams']
             self.response.apply response['responseParams'] if self.response
+          else
+            self.response.load()
 
-          self.response.load()
+          params = response['params'] || []
+          dependents = response['dependents'] || []
+          if response['name']
+            # TODO: run window.App
+            context = window.App.run response['name'], params, dependents
+            self.response.setContext context
+            self.response.triggerContext()

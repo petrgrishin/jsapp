@@ -17,6 +17,12 @@ class Response
   apply: () ->
     @listener.trigger "apply"
 
+  bindContext: (callback) ->
+    @listener.subscribe "context", _.bind(callback, this)
+
+  triggerContext: () ->
+    @listener.trigger "context"
+
   setContent: (@content) ->
 
   getContent: () ->
@@ -26,3 +32,12 @@ class Response
 
   getContext: () ->
     @context
+
+  clearApply: () ->
+    @listener.clear("apply")
+
+  clearLoad: () ->
+    @listener.clear("load")
+
+  clearContext: () ->
+    @listener.clear("context")

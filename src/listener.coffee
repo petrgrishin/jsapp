@@ -11,3 +11,7 @@ class Listener
     @subscribers[name] ?= []
     @subscribers[name].push callback
     this
+
+  clear: (name) ->
+    @subscribers[name] = []
+    this

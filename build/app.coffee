@@ -40,6 +40,10 @@ class Listener
     @subscribers[name] ?= []
     @subscribers[name].push callback
     this
+
+  clear: (name) ->
+    @subscribers[name] = []
+    this
 class Loader
   constructor: (@response) ->
 
@@ -52,21 +56,22 @@ class Loader
       dataType: 'json'
       success: (response) ->
         if response
-          params = response['params'] || []
-          dependents = response['dependents'] || []
-
-          if response['name']
-            # TODO: run window.App
-            context = window.App.run response['name'], params, dependents
-            self.response.setContext context
 
           if response['content']
             self.response.setContent response['content']
 
           if response['responseParams']
             self.response.apply response['responseParams'] if self.response
+          else
+            self.response.load()
 
-          self.response.load()
+          params = response['params'] || []
+          dependents = response['dependents'] || []
+          if response['name']
+            # TODO: run window.App
+            context = window.App.run response['name'], params, dependents
+            self.response.setContext context
+            self.response.triggerContext()
 class Queue
 
 class Request
@@ -90,6 +95,12 @@ class Response
   apply: () ->
     @listener.trigger "apply"
 
+  bindContext: (callback) ->
+    @listener.subscribe "context", _.bind(callback, this)
+
+  triggerContext: () ->
+    @listener.trigger "context"
+
   setContent: (@content) ->
 
   getContent: () ->
@@ -100,6 +111,14 @@ class Response
   getContext: () ->
     @context
 
+  clearApply: () ->
+    @listener.clear("apply")
+
+  clearLoad: () ->
+    @listener.clear("load")
+
+  clearContext: () ->
+    @listener.clear("context")
 # Singleton class
 class Scope
   createListener: ->
