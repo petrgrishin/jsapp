@@ -1,7 +1,5 @@
 (function() {
-  var App, Area, Listener, Loader, Queue, Request, Response, Scope, Widget,
-    __hasProp = {}.hasOwnProperty,
-    __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
+  var App, Listener, Loader, Queue, Request, Response, Scope, Widget;
 
   App = (function() {
     function App() {
@@ -222,12 +220,12 @@
       return new Response();
     };
 
-    Scope.prototype.createAreaWidget = function(response) {
-      return new Area(response);
-    };
-
     Scope.prototype.createLoader = function(response) {
       return new Loader(response);
+    };
+
+    Scope.prototype.$id = function(id) {
+      return $(window.document.getElementById(id));
     };
 
     return Scope;
@@ -253,27 +251,6 @@
     return Widget;
 
   })();
-
-  Area = (function(_super) {
-    __extends(Area, _super);
-
-    function Area(response) {
-      this.response = response;
-    }
-
-    Area.prototype.load = function() {
-      var load;
-      load = new Loader(this.response);
-      return load.pull("/", {
-        data: ""
-      });
-    };
-
-    Area.prototype.reload = function() {};
-
-    return Area;
-
-  })(Widget);
 
   if (typeof module !== "undefined" && module !== null) {
     module.exports = App;

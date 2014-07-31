@@ -6,8 +6,8 @@ class Scope
   createResponse: ->
     new Response()
 
-  createAreaWidget: (response) ->
-    new Area(response)
-
   createLoader: (response) ->
     new Loader(response)
+
+  $id: (id) ->
+    $(window.document.getElementById(id))

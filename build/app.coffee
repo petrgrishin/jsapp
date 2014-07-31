@@ -127,11 +127,12 @@ class Scope
   createResponse: ->
     new Response()
 
-  createAreaWidget: (response) ->
-    new Area(response)
-
   createLoader: (response) ->
     new Loader(response)
+
+  $id: (id) ->
+    $(window.document.getElementById(id))
+
 class Widget
   apply: () ->
     @response.apply() if @response
@@ -139,15 +140,6 @@ class Widget
   onApply: (response) ->
     throw "Not instance of Response" if not response instanceof Response
     @response = response
-class Area extends Widget
-  constructor: (@response) ->
-
-  load: () ->
-    load = new Loader(@response)
-    load.pull "/", {data: ""}
-
-  reload: () ->
-
 # for nodeunit
 module.exports = App if module?
 # for production
