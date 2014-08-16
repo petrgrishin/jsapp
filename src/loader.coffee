@@ -15,9 +15,9 @@ class Loader
             self.response.setContent response['content']
 
           if response['responseParams']
-            self.response.apply response['responseParams'] if self.response
+            self.response.triggerApply response['responseParams'] if self.response
           else
-            self.response.load()
+            self.response.triggerLoad()
 
           params = response['params'] || []
           dependents = response['dependents'] || []

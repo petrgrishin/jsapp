@@ -21,5 +21,11 @@ module.exports = (grunt) ->
         dest: "tests/nodeunit/build"
         ext: ".js"
 
+    uglify:
+      app:
+        src: 'build/app.js'
+        dest: 'build/app.min.js'
+
   grunt.loadNpmTasks "grunt-contrib-coffee"
-  grunt.registerTask "default", ["coffee"]
+  grunt.loadNpmTasks 'grunt-contrib-uglify'
+  grunt.registerTask "default", ["coffee", "uglify"]

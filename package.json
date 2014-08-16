@@ -14,10 +14,11 @@
     "devDependencies": {
         "coffee-script": "~1.4.0",
         "nodeunit": "~0.7.4",
-        "underscore": "~1.6.0",
-        "jquery": "~2.1.0",
+        "underscore": "~1.6",
+        "jquery": "~2.1",
         "grunt": "~0.4.2",
         "grunt-cli": "~0.1.13",
-        "grunt-contrib-coffee": "*"
+        "grunt-contrib-coffee": "*",
+        "grunt-contrib-uglify": "*"
     }
 }

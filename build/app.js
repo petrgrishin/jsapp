@@ -108,10 +108,10 @@
             }
             if (response['responseParams']) {
               if (self.response) {
-                self.response.apply(response['responseParams']);
+                self.response.triggerApply(response['responseParams']);
               }
             } else {
-              self.response.load();
+              self.response.triggerLoad();
             }
             params = response['params'] || [];
             dependents = response['dependents'] || [];
@@ -157,7 +157,7 @@
       return this.listener.subscribe("load", _.bind(callback, this));
     };
 
-    Response.prototype.load = function() {
+    Response.prototype.triggerLoad = function() {
       return this.listener.trigger("load");
     };
 
@@ -165,7 +165,7 @@
       return this.listener.subscribe("apply", _.bind(callback, this));
     };
 
-    Response.prototype.apply = function() {
+    Response.prototype.triggerApply = function() {
       return this.listener.trigger("apply");
     };
 

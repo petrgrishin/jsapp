@@ -25,7 +25,7 @@ module.exports.AppTest =
     isTestPassed = false
     responseInstance.bindApply (param) -> isTestPassed = param
     test.ok not isTestPassed
-    responseInstance.apply true
+    responseInstance.triggerApply true
     test.ok isTestPassed
     test.done()
 

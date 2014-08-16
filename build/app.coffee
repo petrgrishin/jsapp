@@ -61,9 +61,9 @@ class Loader
             self.response.setContent response['content']
 
           if response['responseParams']
-            self.response.apply response['responseParams'] if self.response
+            self.response.triggerApply response['responseParams'] if self.response
           else
-            self.response.load()
+            self.response.triggerLoad()
 
           params = response['params'] || []
           dependents = response['dependents'] || []
@@ -86,13 +86,13 @@ class Response
   bindLoad: (callback) ->
     @listener.subscribe "load", _.bind(callback, this)
 
-  load: () ->
+  triggerLoad: () ->
     @listener.trigger "load"
 
   bindApply: (callback) ->
     @listener.subscribe "apply", _.bind(callback, this)
 
-  apply: () ->
+  triggerApply: () ->
     @listener.trigger "apply"
 
   bindContext: (callback) ->
