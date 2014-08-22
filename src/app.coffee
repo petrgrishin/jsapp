@@ -3,6 +3,7 @@ class App
     @assertPath = '/assets/scripts/'
     @viewFunctions = {}
     @registerScripts = {}
+    @registerStyles = {}
     @scope ?= new Scope()
 
   register: (name, func) ->
@@ -26,3 +27,11 @@ class App
     $script.attr 'src', @registerScripts[name]
     @body ?= $ 'body:first'
     @body.append $script
+
+  registerStyleFile: (src) ->
+    return if @registerStyles[src]?
+    @registerStyles[src] = true
+    $styleLink = $ '<link rel="stylesheet"/>'
+    $styleLink.attr 'href', src
+    @head ?= $ 'head:first'
+    @head.append $styleLink

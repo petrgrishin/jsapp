@@ -6,6 +6,7 @@
       this.assertPath = '/assets/scripts/';
       this.viewFunctions = {};
       this.registerScripts = {};
+      this.registerStyles = {};
       if (this.scope == null) {
         this.scope = new Scope();
       }
@@ -43,6 +44,20 @@
         this.body = $('body:first');
       }
       return this.body.append($script);
+    };
+
+    App.prototype.registerStyleFile = function(src) {
+      var $styleLink;
+      if (this.registerStyles[src] != null) {
+        return;
+      }
+      this.registerStyles[src] = true;
+      $styleLink = $('<link rel="stylesheet"/>');
+      $styleLink.attr('href', src);
+      if (this.head == null) {
+        this.head = $('head:first');
+      }
+      return this.head.append($styleLink);
     };
 
     return App;
