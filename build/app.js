@@ -116,7 +116,7 @@
         type: options['type'] || 'GET',
         dataType: 'json',
         success: function(response) {
-          var context, dependents, params;
+          var context, dependents, params, styleProcessor, styles;
           if (response) {
             if (response['content']) {
               self.response.setContent(response['content']);
@@ -133,8 +133,13 @@
             if (response['name']) {
               context = window.App.run(response['name'], params, dependents);
               self.response.setContext(context);
-              return self.response.triggerContext();
+              self.response.triggerContext();
             }
+            styles = response['styles'] || [];
+            styleProcessor = function(src) {
+              return window.App.registerStyleFile(src);
+            };
+            return _.each(styles, styleProcessor);
           }
         }
       });

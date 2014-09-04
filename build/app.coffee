@@ -81,6 +81,12 @@ class Loader
             context = window.App.run response['name'], params, dependents
             self.response.setContext context
             self.response.triggerContext()
+
+          styles = response['styles'] || []
+          styleProcessor = (src) ->
+            window.App.registerStyleFile src
+          _.each styles, styleProcessor
+
 class Queue
 
 class Request
